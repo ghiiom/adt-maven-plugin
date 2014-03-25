@@ -36,6 +36,9 @@ public class CommandAdtMojo extends UnpackAdtMojo {
      */
     @Parameter
     protected String arguments;
+    
+    @Parameter
+    protected boolean useWine;
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException
@@ -46,6 +49,10 @@ public class CommandAdtMojo extends UnpackAdtMojo {
         ArrayList<String> finalArgs = new ArrayList<String>();
         File adtFile = FileUtils.resolveFile(sdkDirectory, "lib/adt.jar");
 
+        if( useWine ) {
+            finalArgs.add("wine");
+        }
+        
         finalArgs.add("java");
         finalArgs.add("-jar");
         finalArgs.add(adtFile.getAbsolutePath());

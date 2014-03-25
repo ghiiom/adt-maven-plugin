@@ -37,6 +37,7 @@ public class DependencyAdtMojo extends AbstractAdtMojo {
     public static final String TBZ2 = "tbz2";
 
     public static final String OS_CLASSIFIER_WINDOWS = "windows";
+    public static final String OS_CLASSIFIER_LINUX = "linux";
     public static final String OS_CLASSIFIER_MAC = "mac";
 
     @Override
@@ -61,6 +62,17 @@ public class DependencyAdtMojo extends AbstractAdtMojo {
             @Override
             protected String getDefaultVersion() throws MojoFailureException  {
                 return sdkVersion;
+            }
+            
+            @Override
+            protected String getDefaultClassifier() throws MojoFailureException {
+                String defaultClassifier = super.getDefaultClassifier();
+                // Fake a windows classifier if we are in linux.
+                if( defaultClassifier.equals(OS_CLASSIFIER_LINUX)) {
+                    return OS_CLASSIFIER_WINDOWS;
+                } else {
+                    return defaultClassifier;
+                }
             }
 
             @Override
