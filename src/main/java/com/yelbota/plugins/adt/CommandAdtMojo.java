@@ -49,7 +49,10 @@ public class CommandAdtMojo extends UnpackAdtMojo {
         ArrayList<String> finalArgs = new ArrayList<String>();
         File adtFile = FileUtils.resolveFile(sdkDirectory, "lib/adt.jar");
 
-        if( useWine ) {
+        // Even if useWine is true, disregard if we are on windows.
+        boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("win");
+        
+        if( useWine && !isWindows ) {
             finalArgs.add("wine");
         }
         
